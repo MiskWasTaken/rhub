@@ -17,8 +17,12 @@ Misk and only Misk
 local settingstable = loadstring('return '..readfile("rhubfolder/settings.png"))
 
 local a=loadstring(game:HttpGet("https://raw.githubusercontent.com/GreenDeno/Venyx-UI-Library/main/source.lua"))()local b=a.new("RHub",5013109572)
+
 local Settings = b:addPage("Settings", 5012544386):addSection("Settings")
-Settings:addKeybind("Toggle Keybind", settingstable[1], function() venyx:toggle() end, function(key) settingstable[1] = tostring(key) appendfile('rhubfolder/settings.png', ) end)
+Settings:addKeybind("Toggle Keybind", settingstable[1], function() venyx:toggle() end, function(key) settingstable[1] = ('Enum.Keycode.'..tostring(key)) appendfile('rhubfolder/settings.png', tableToString(settingstable)) end)
+Settings:addButton('Close gui', function() a:Notify('WIP', 'im lazy', nil) end)
+
+local Script = b:addPage("Script Sel", 5012539416):addSection("Script Sel")
 
 
 --⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
