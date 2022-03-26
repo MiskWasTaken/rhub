@@ -8,7 +8,7 @@ function tableToString(a)local b='{'local c=false;for d,e in pairs(a)do if c==fa
 if isfolder('rhubfolder') == false then makefolder('rhubfolder') end
 ifNotFile('rhubfolder/userinfo.png', "{'"..tostring(game:GetService("RbxAnalyticsService"):GetClientId()).."'}")
 ifNotFile('rhubfolder/settings.png','{Enum.KeyCode.KeypadMinus}')
-ifNotFile('rhubfolder/scripts.txt', '{}')
+ifNotFile('rhubfolder/scripts.txt', '{""}')
 ifNotFile('rhubfolder/README.md', [[Insert this in github please
 # Credits
 Misk and only Misk
@@ -21,6 +21,12 @@ local a=loadstring(game:HttpGet("https://raw.githubusercontent.com/GreenDeno/Ven
 local Settings = b:addPage("Settings", 5012544386):addSection("Settings")
 Settings:addKeybind("Toggle Keybind", settingstable[1], function() venyx:toggle() end, function(key) settingstable[1] = ('Enum.Keycode.'..tostring(key)) appendfile('rhubfolder/settings.png', tableToString(settingstable)) end)
 Settings:addButton('Close gui', function() a:Notify('WIP', 'im lazy', nil) end)
+
+local scripts = loadstring('return '..readfile("rhubfolder/scripts.txt"))
+
+if scripts == {''} then
+  
+end
 
 local Script = b:addPage("Script Sel", 5012539416):addSection("Script Sel")
 
