@@ -1,12 +1,25 @@
 -- main.lua v0.0
--- Made by Misk#4044 and obfuscation by (i forgor)
+-- Made by Misk#4044
 -- Love <3
--- If you ever deobfuscate this please don't share the script.
 
-local url = 'https://raw.githubusercontent.com/MiskWasTaken/rhub-dev/main/main.lua'
-if isfolder('rhubfolder') == false then makefolder('rhubfolder') writefile('rhubfolder//userinfo.png', "return {'"..tostring(game:GetService("RbxAnalyticsService"):GetClientId()).."'}") 
-else loadstring(game:HttpGet((url), true))()
-end
+function ifNotFile(a,b)if isfile(a)==false then writefile(a,b)end end
+function tableToString(a)local b='{'local c=false;for d,e in pairs(a)do if c==false then c=true else b=b..','end;b=b..e end;return b..'}'end
+
+if isfolder('rhubfolder') == false then makefolder('rhubfolder') end
+ifNotFile('rhubfolder/userinfo.png', "{'"..tostring(game:GetService("RbxAnalyticsService"):GetClientId()).."'}")
+ifNotFile('rhubfolder/settings.png','{Enum.KeyCode.KeypadMinus}')
+ifNotFile('rhubfolder/scripts.txt', '{}')
+ifNotFile('rhubfolder/README.md', [[Insert this in github please
+# Credits
+Misk and only Misk
+## GG]])
+
+local settingstable = loadstring('return '..readfile("rhubfolder/settings.png"))
+
+local a=loadstring(game:HttpGet("https://raw.githubusercontent.com/GreenDeno/Venyx-UI-Library/main/source.lua"))()local b=a.new("RHub",5013109572)
+local Settings = b:addPage("Settings", 5012544386):addSection("Settings")
+Settings:addKeybind("Toggle Keybind", settingstable[1], function() venyx:toggle() end, function(key) settingstable[1] = tostring(key) appendfile('rhubfolder/settings.png', ) end)
+
 
 --⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 --⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣶⣿⣿⣿⣿⣿⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
