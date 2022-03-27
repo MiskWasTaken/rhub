@@ -11,8 +11,8 @@ ifNotFile('rhubfolder/settings.png','{Enum.KeyCode.KeypadMinus}')
 ifNotFile('rhubfolder/scripts.txt', '{""}')
 ifNotFile('rhubfolder/README.md', [[{
   {
-  ['NAME'] = 'script-guide'; -- Shown name
-  ['SCRIPT'] = function() print('Hello World!') end
+    ['NAME'] = 'script-guide'; -- Shown name
+    ['SCRIPT'] = function() print('Hello World!') end
   }
 }]])
 
