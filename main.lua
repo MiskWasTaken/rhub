@@ -12,7 +12,7 @@ ifNotFile('rhubfolder/scripts.txt', '{""}')
 ifNotFile('rhubfolder/README.md', [[{
   {
   ['NAME'] = 'script-guide'; -- Shown name
-  ['SCRIPT'] = 'print('Hello World!')'
+  ['SCRIPT'] = function() print('Hello World!') end
   }
 }]])
 
@@ -33,7 +33,7 @@ if scripts[1] ~= def[1] then
   local scriptspage = b:addPage('Scripts', 5012539805)
   for _,v in pairs(scripts) do
     local x = scriptspage:addSection(v["NAME"])
-    x:addButton('Execute', function() loadstring(v['SCRIPT'])() end)
+    x:addButton('Execute', function() v['SCRIPT']() end)
   end
 end
 
