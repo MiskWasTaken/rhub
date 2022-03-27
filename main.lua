@@ -14,22 +14,28 @@ ifNotFile('rhubfolder/README.md', [[Insert this in github please
 Misk and only Misk
 ## GG]])
 
-local settingstable = loadstring('return '..readfile("rhubfolder/settings.png"))
+local settingstable = loadstring('return '..readfile("rhubfolder/settings.png"))()
 
 local a=loadstring(game:HttpGet("https://raw.githubusercontent.com/GreenDeno/Venyx-UI-Library/main/source.lua"))()local b=a.new("RHub",5013109572)
+getgenv().RHUBGUI = b
 
 local Settings = b:addPage("Settings", 5012544386):addSection("Settings")
-Settings:addKeybind("Toggle Keybind", settingstable[1], function() venyx:toggle() end, function(key) settingstable[1] = ('Enum.Keycode.'..tostring(key)) appendfile('rhubfolder/settings.png', tableToString(settingstable)) end)
-Settings:addButton('Close gui', function() a:Notify('WIP', 'im lazy', nil) end)
+Settings:addKeybind("Toggle Keybind", settingstable[1], function() b:toggle() end, function(key) settingstable[1] = ('Enum.Keycode.'..tostring(key)) appendfile('rhubfolder/settings.png', tableToString(settingstable)) end)
+Settings:addButton('"RHUBGUI" is a getgenv value', nil)
+Settings:addButton('Close gui', function() b:toggle() wait(1) game.CoreGui['RHub']:Destroy() end)
 
-local scripts = loadstring('return '..readfile("rhubfolder/scripts.txt"))
+local scripts = loadstring('return '..readfile("rhubfolder/scripts.txt"))()
+local def = {""}
 
-if scripts == {''} then
-  
+if scripts[1] == def[1] then
+  b:addPage("Guide", 5012543495):addSection("How to insert a script")
+else
+  local scriptspage = b:addPage('Scripts', 5012539805)
+  for _,v in pairs(scripts) do
+    local x = scriptspage:addSection(v["NAME"])
+    x:addButton('Execute Script', function() loadstring(v['SCRIPT'])() end)
+  end
 end
-
-local Script = b:addPage("Script Sel", 5012539416):addSection("Script Sel")
-
 
 --⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 --⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣶⣿⣿⣿⣿⣿⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
