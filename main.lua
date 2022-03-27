@@ -29,7 +29,7 @@ Settings:addButton('Close gui', function() b:toggle() wait(1) game.CoreGui['RHub
 local scripts = loadstring('return '..readfile("rhubfolder/scripts.txt"))()
 local def = {""}
 
-if scripts[1] ~= def[1] then
+if scripts[1] == def[1] then else
   local scriptspage = b:addPage('Scripts', 5012539805)
   for _,v in pairs(scripts) do
     local x = scriptspage:addSection(v["NAME"])
