@@ -9,10 +9,12 @@ if isfolder('rhubfolder') == false then makefolder('rhubfolder') end
 ifNotFile('rhubfolder/userinfo.png', "{'"..tostring(game:GetService("RbxAnalyticsService"):GetClientId()).."'}")
 ifNotFile('rhubfolder/settings.png','{Enum.KeyCode.KeypadMinus}')
 ifNotFile('rhubfolder/scripts.txt', '{""}')
-ifNotFile('rhubfolder/README.md', [[Insert this in github please
-# Credits
-Misk and only Misk
-## GG]])
+ifNotFile('rhubfolder/README.md', [[{
+  {
+  ['NAME'] = 'script-guide'; -- Shown name
+  ['SCRIPT'] = 'print('Hello World!')'
+  }
+}]])
 
 local settingstable = loadstring('return '..readfile("rhubfolder/settings.png"))()
 
@@ -27,13 +29,11 @@ Settings:addButton('Close gui', function() b:toggle() wait(1) game.CoreGui['RHub
 local scripts = loadstring('return '..readfile("rhubfolder/scripts.txt"))()
 local def = {""}
 
-if scripts[1] == def[1] then
-  b:addPage("Guide", 5012543495):addSection("How to insert a script")
-else
+if scripts[1] ~= def[1] then
   local scriptspage = b:addPage('Scripts', 5012539805)
   for _,v in pairs(scripts) do
     local x = scriptspage:addSection(v["NAME"])
-    x:addButton('Execute Script', function() loadstring(v['SCRIPT'])() end)
+    x:addButton('Execute', function() loadstring(v['SCRIPT'])() end)
   end
 end
 
