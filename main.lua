@@ -30,11 +30,11 @@ local scripts = loadstring('return '..readfile("rhubfolder/scripts.txt"))()
 local def = {""}
 
 if scripts[1] == def[1] then else
-  local scriptspage = b:addPage('Scripts', 5012539805)
-  for _,v in pairs(scripts) do
-    local x = scriptspage:addSection(v["NAME"])
-    x:addButton('Execute', function() v['SCRIPT']() end)
-  end
+    local scriptspage = b:addPage('Scripts', 5012539805)
+    for _,v in pairs(scripts) do
+        local x = scriptspage:addSection(v["NAME"])
+        x:addButton('Execute', function() v['SCRIPT']() end)
+    end
 end
 
 --⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
