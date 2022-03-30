@@ -22,7 +22,7 @@ local a=loadstring(game:HttpGet("https://raw.githubusercontent.com/GreenDeno/Ven
 getgenv().RHUBGUI = b
 
 local Settings = b:addPage("Settings", 5012544386):addSection("Settings")
-Settings:addKeybind("Toggle Keybind", settingstable[1], function() b:toggle() end, function(key) settingstable[1] = (key) appendfile('rhubfolder/settings.png', tableToString(settingstable)) end)
+Settings:addKeybind("Toggle Keybind", settingstable[1], function() b:toggle() end)
 Settings:addButton('"RHUBGUI" is a getgenv value', nil)
 Settings:addButton('Close gui', function() b:toggle() wait(1) game.CoreGui['RHub']:Destroy() end)
 
