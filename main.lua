@@ -14,6 +14,12 @@ local SettingsRHub = {
   }
 }
 local Window = OrionLib:MakeWindow({Name = "RHub", HidePremium = false, SaveConfig = true, ConfigFolder = SettingsRHub.FolderName})
+if not isfolder(SettingsRHub.FolderName..'\\Icons') then makefolder(SettingsRHub.FolderName..'\\Icons') end
+for key, value in pairs(SettingsRHub.Icons) do
+  if isfile(SettingsRHub.FolderName..'\\Icons\\'..value) then
+    appendfile(SettingsRHub.FolderName..'\\Icons\\'..value)
+  end
+end
 
 -- Main
 local Main = Window:MakeTab({
