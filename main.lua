@@ -1,6 +1,6 @@
 -- main.lua v1.0 Rewrite
 -- Made by Misk#4044
--- Love <3 x
+-- Love <3
 
 function shortnumberstring(a)local b={{1,""},{1e3,"k"},{1e6,"m"},{1e9,"g"},{1e12,"t"}}for c,d in ipairs(b)do if d[1]<=a+1 then b.use=c end end;local e=string.format("%.1f",a/b[b.use][1])if tonumber(e)>=1e3 and b.use<#b then b.use=b.use+1;e=string.format("%.1f",tonumber(e)/1e3)end;return e..b[b.use][2]end
 function ifNotFile(a,b)if isfile(a)==false then writefile(a,b)end end
