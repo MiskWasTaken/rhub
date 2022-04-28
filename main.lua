@@ -2,6 +2,8 @@
 -- Made by Misk#4044
 -- Love <3
 
+-- Testing AC
+
 function ifNotFile(a,b)if isfile(a)==false then writefile(a,b)end end
 function tableToString(a)local b='{'local c=false;for d,e in pairs(a)do if c==false then c=true else b=b..','end;b=b..e end;return b..'}'end
 

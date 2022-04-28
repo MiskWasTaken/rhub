@@ -1,0 +1,14 @@
+{
+    "robloxLsp.diagnostics.globals": [
+        "syn",
+        "fireclickdetector",
+        "setclipboard",
+        "getsynasset",
+        "getgenv",
+        "isfolder",
+        "makefolder",
+        "isfile",
+        "writefile",
+        "readfile"
+    ]
+}
