@@ -4,7 +4,16 @@
 
 -- Starting variables
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "RHub", HidePremium = false, SaveConfig = true, ConfigFolder = "RHubFolderv1"})
+local SettingsRHub = {
+  FolderName = 'RHubFolderv1';
+  Token = '?token=GHSAT0AAAAAABUBNTAXEMSNNFM3EYUJUPAOYTLCF2Q';
+  Git = 'https://raw.githubusercontent.com/MiskWasTaken/rhub-dev/main/';
+  IconsDir = 'Icons/';
+  Icons = {
+    'home.svg'
+  }
+}
+local Window = OrionLib:MakeWindow({Name = "RHub", HidePremium = false, SaveConfig = true, ConfigFolder = SettingsRHub.FolderName})
 
 -- Main
 local Main = Window:MakeTab({
