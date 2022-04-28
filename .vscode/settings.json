@@ -9,6 +9,8 @@
         "makefolder",
         "isfile",
         "writefile",
-        "readfile"
+        "readfile",
+        "rconsoleprint",
+        "rconsoleclear"
     ]
 }
