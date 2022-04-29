@@ -53,13 +53,14 @@ for key, value in pairs(SettingsRHub.Icons) do
   SettingsRHub.Icons[key] = Key()
 
 end
-if (not writefile) then
+if true then
   OrionLib:MakeNotification({
-    Name = "UI Elements",
-    Content = "Updating "..value..'.',
-    Image = '',
+    Name = "RHub | Alert",
+    Content = 'Missing functions.',
+    Image = SettingsRHub.Icons.Alert,
     Time = 3
   })
+  return
 end
 local Window = OrionLib:MakeWindow({Name = "RHub", HidePremium = false, SaveConfig = true, ConfigFolder = SettingsRHub.FolderName})
 -- Main
