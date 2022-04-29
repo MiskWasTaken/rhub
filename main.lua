@@ -1,11 +1,11 @@
-local alert, notify, notcustom
+local alert, notify, notcustom, OrionLib, error
 local succ, err = pcall(function()
   -- main.lua v1.0 Rewrite
   -- Made by Misk#4044
   -- Love <3
 
   -- Starting variables
-  local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+  OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
   local SettingsRHub = {
     FolderName = 'RHubFolderv1';
     Git = 'https://raw.githubusercontent.com/MiskWasTaken/rhub/main/';
@@ -16,7 +16,8 @@ local succ, err = pcall(function()
       LocalPlayer = 'user.png';
       Alert = 'alert-triangle.png';
       Download = 'download.png';
-      Notification = 'bell.png'
+      Notification = 'bell.png';
+      Error = 'alert-octagon.png'
     };
     SoundsDir = 'Sounds/';
     Sounds = {
@@ -66,6 +67,14 @@ local succ, err = pcall(function()
       Time = 4
     })
   end
+  function error(text)
+    OrionLib:MakeNotification({
+      Name = "RHub | Error",
+      Content = text,
+      Image = SettingsRHub.Icons.Error,
+      Time = 5
+    })
+  end
   function notify(text)
     OrionLib:MakeNotification({
       Name = "RHub | Notification",
@@ -87,11 +96,11 @@ local succ, err = pcall(function()
   end
 
   if not isfolder(SettingsRHub.FolderName..'\\Sounds') then makefolder(SettingsRHub.FolderName..'\\Sounds') end
-  for key, value in pairs(SettingsRHub.Icons) do
+  for key, value in pairs(SettingsRHub.Sounds) do
 
     Key = function()
       if isfile(SettingsRHub.FolderName..'\\Sounds\\'..value) then
-
+        
         local code = game:HttpGet(SettingsRHub.Git..SettingsRHub.SoundsDir..value)
         delfile(SettingsRHub.FolderName..'\\Sounds\\'..value, code)
         writefile(SettingsRHub.FolderName..'\\Sounds\\'..value, code)
@@ -100,6 +109,7 @@ local succ, err = pcall(function()
     
       else
         
+        print(SettingsRHub.Git..SettingsRHub.SoundsDir..value)
         local code = game:HttpGet(SettingsRHub.Git..SettingsRHub.SoundsDir..value)
         writefile(SettingsRHub.FolderName..'\\Sounds\\'..value, code)
 
@@ -221,9 +231,15 @@ local succ, err = pcall(function()
 end)
 if not succ then
   if alert then
-    alert(err)
+    error(err)
     warn(err)
   else
+    OrionLib:MakeNotification({
+      Name = "RHub | Error",
+      Content = err,
+      Image = '',
+      Time = 4
+    })
     warn(err)
   end
 end
