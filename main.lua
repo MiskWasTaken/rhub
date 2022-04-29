@@ -17,7 +17,8 @@ local succ, err = pcall(function()
       Alert = 'alert-triangle.png';
       Download = 'download.png';
       Notification = 'bell.png';
-      Error = 'alert-octagon.png'
+      Error = 'alert-octagon.png';
+      Settings = 'settings.png'
     };
     SoundsDir = 'Sounds/';
     Sounds = {
@@ -74,6 +75,11 @@ local succ, err = pcall(function()
     })
   end
   function error(text)
+    local sound = Instance.new('Sound', game:GetService('SoundService'))
+    sound.SoundId = SettingsRHub.Sounds.Notification
+    sound.Volume = .5
+    sound.PlayOnRemove = true
+    sound:Destroy()
     OrionLib:MakeNotification({
       Name = "RHub | Error",
       Content = text,
@@ -95,6 +101,11 @@ local succ, err = pcall(function()
     })
   end
   function notcustom(text, additional, image, time)
+    local sound = Instance.new('Sound', game:GetService('SoundService'))
+    sound.SoundId = SettingsRHub.Sounds.Notification
+    sound.Volume = .5
+    sound.PlayOnRemove = true
+    sound:Destroy()
     local title = ("RHub | ".. additional) or ('RHub')
     local image = image or ''
     local time = time or 3
@@ -214,6 +225,21 @@ local succ, err = pcall(function()
     end	 
   })
 
+  -- Settings
+  local Settings = Window:MakeTab({
+    Name = "Settings",
+    Icon = SettingsRHub.Icons.Settings,
+    PremiumOnly = false
+  })
+  Settings:AddToggle({
+    Name = "Auto Detect Game",
+    Default = OrionLib.Flags["AutoDetectGame"].Value or false,
+    Save = true,
+    Flag = 'AutoDetectGame',
+    Callback = function(Value)
+      print(Value)
+    end    
+  })
 
   -- Credits
   local Credits = Window:MakeTab({
