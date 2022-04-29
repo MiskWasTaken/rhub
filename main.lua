@@ -13,9 +13,20 @@ local SettingsRHub = {
     Credits = 'info.png';
     LocalPlayer = 'user.png';
     Alert = 'alert-triangle.png';
-    Download = 'download.png'
+    Download = 'download.png';
+    Notification = 'bell.png'
   }
 }
+if (not isfolder) then
+  OrionLib:MakeNotification({
+    Name = "RHub | Error",
+    Content = 'Missing functions. (MOST IMPORTANT FUNCTION)',
+    Image = '',
+    Time = 4
+  })
+  return
+end
+
 if not isfolder(SettingsRHub.FolderName..'\\Icons') then makefolder(SettingsRHub.FolderName..'\\Icons') end
 for key, value in pairs(SettingsRHub.Icons) do
 
@@ -40,13 +51,37 @@ for key, value in pairs(SettingsRHub.Icons) do
   SettingsRHub.Icons[key] = Key()
 
 end
-OrionLib:MakeNotification({
-  Name = "UI Elements",
-  Content = 'Done downloading.',
-  Image = SettingsRHub.Icons.Download,
-  Time = 2
-})
-if true then
+
+function alert(text)
+  OrionLib:MakeNotification({
+    Name = "RHub | Alert",
+    Content = text,
+    Image = SettingsRHub.Icons.Alert,
+    Time = 2
+  })
+end
+function notify(text)
+  OrionLib:MakeNotification({
+    Name = "RHub | Notification",
+    Content = text,
+    Image = SettingsRHub.Icons.Notification,
+    Time = 2
+  })
+end
+function notcustom(text, additional, image)
+  local title = ("RHub | ".. additional) or ('RHub')
+  local image = image or ''
+  OrionLib:MakeNotification({
+    Name = title,
+    Content = text,
+    Image = image,
+    Time = 2
+  })
+end
+
+notcustom('Done downloading.', 'UI Elements', SettingsRHub.Icons.Notification)
+
+if (not getsynasset) then
   OrionLib:MakeNotification({
     Name = "RHub | Alert",
     Content = 'Missing functions.',
@@ -55,6 +90,7 @@ if true then
   })
   return
 end
+
 local Window = OrionLib:MakeWindow({Name = "RHub", HidePremium = false, SaveConfig = true, ConfigFolder = SettingsRHub.FolderName})
 -- Main
 local Main = Window:MakeTab({
@@ -77,6 +113,38 @@ LocalPlayer:AddButton({
     ts:Teleport(game.PlaceId, p)
   end  
 })
+
+-- Testing
+local Testing = Window:MakeTab({
+	Name = "Testing",
+	Icon = SettingsRHub.Icons.Alert,
+	PremiumOnly = true
+})
+Testing:AddTextbox({
+	Name = "Alert Notification",
+	Default = "YOUR GAY!!!!",
+	TextDisappear = true,
+	Callback = function(Value)
+		alert(Value)
+	end	  
+})
+Testing:AddTextbox({
+	Name = "Custom Notification (Only Text)",
+	Default = "Hello.",
+	TextDisappear = true,
+	Callback = function(Value)
+		notcustom(Value, 'Made By User', SettingsRHub.Icons.LocalPlayer)
+	end	 
+})
+Testing:AddTextbox({
+	Name = "Notification",
+	Default = "Free Bobux",
+	TextDisappear = true,
+	Callback = function(Value)
+		notify(Value)
+	end	 
+})
+
 
 -- Credits
 local Credits = Window:MakeTab({
