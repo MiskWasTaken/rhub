@@ -20,7 +20,7 @@ local SettingsRHub = {
 if (not isfolder) then
   OrionLib:MakeNotification({
     Name = "RHub | Error",
-    Content = 'Missing functions. (MOST IMPORTANT FUNCTION)',
+    Content = 'Missing functions, find a better executor you retard.\nMissing Functions:\nFilesystem Functions',
     Image = '',
     Time = 4
   })
@@ -83,30 +83,37 @@ end
 notcustom('Done downloading.', 'UI Elements', SettingsRHub.Icons.Notification)
 
 if (not getsynasset) then
+  local textfile = 'Missing functions:'
+  if not getsynasset then
+    textfile = textfile..'\ngetsynasset'
+  end
   OrionLib:MakeNotification({
     Name = "RHub | Alert",
-    Content = 'Missing functions.',
+    Content = textfile,
     Image = SettingsRHub.Icons.Alert,
     Time = 4
   })
   return
 end
 
-local Window = OrionLib:MakeWindow({Name = "RHub", HidePremium = false, SaveConfig = true, ConfigFolder = SettingsRHub.FolderName})
+local Window = OrionLib:MakeWindow({Name = "RHub | General", HidePremium = false, SaveConfig = true, ConfigFolder = SettingsRHub.FolderName})
 -- Main
 local Main = Window:MakeTab({
 	Name = "Main",
 	Icon = SettingsRHub.Icons.Home,
 	PremiumOnly = false
 })
-
--- LocalPlayer
-local LocalPlayer = Window:MakeTab({
-	Name = "LocalPlayer",
-	Icon = SettingsRHub.Icons.LocalPlayer,
-	PremiumOnly = false
+Main:AddButton({
+	Name = "Detect game",
+	Callback = function()
+    OrionLib:Destroy()
+    if game.PlaceId == 0 then
+    else
+      notify('Game not found')
+    end
+  end  
 })
-LocalPlayer:AddButton({
+Main:AddButton({
 	Name = "Rejoin",
 	Callback = function()
     alert('Rejoining...')
@@ -118,7 +125,7 @@ LocalPlayer:AddButton({
 
 -- Testing
 local Testing = Window:MakeTab({
-	Name = "Testing",
+	Name = "Testing | PO",
 	Icon = SettingsRHub.Icons.Alert,
 	PremiumOnly = true
 })
@@ -156,6 +163,7 @@ local Credits = Window:MakeTab({
 })
 Credits:AddParagraph("Misk#4044", "Scripter And Owner")
 Credits:AddParagraph("feathericons.com", "For the icons")
+Credits:AddParagraph("shlex#0001", "UI Lib")
 
 -- Init
 OrionLib:Init()
