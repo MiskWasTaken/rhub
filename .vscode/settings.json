@@ -12,6 +12,7 @@
         "readfile",
         "rconsoleprint",
         "rconsoleclear",
-        "appendfile"
+        "appendfile",
+        "delfile"
     ]
 }

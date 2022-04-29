@@ -21,7 +21,8 @@ for key, value in pairs(SettingsRHub.Icons) do
     if isfile(SettingsRHub.FolderName..'\\Icons\\'..value) then
 
       local code = game:HttpGet(SettingsRHub.Git..SettingsRHub.IconsDir..value)
-      appendfile(SettingsRHub.FolderName..'\\Icons\\'..value, code)
+      delfile(SettingsRHub.FolderName..'\\Icons\\'..value, code)
+      writefile(SettingsRHub.FolderName..'\\Icons\\'..value, code)
   
       OrionLib:MakeNotification({
         Name = "UI Elements",
