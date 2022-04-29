@@ -25,13 +25,6 @@ for key, value in pairs(SettingsRHub.Icons) do
       local code = game:HttpGet(SettingsRHub.Git..SettingsRHub.IconsDir..value)
       delfile(SettingsRHub.FolderName..'\\Icons\\'..value, code)
       writefile(SettingsRHub.FolderName..'\\Icons\\'..value, code)
-  
-      OrionLib:MakeNotification({
-        Name = "UI Elements",
-        Content = "Updating "..value..'.',
-        Image = '',
-        Time = 2
-      })
 
       return getsynasset(SettingsRHub.FolderName..'\\Icons\\'..value)
   
@@ -39,23 +32,20 @@ for key, value in pairs(SettingsRHub.Icons) do
       
       local code = game:HttpGet(SettingsRHub.Git..SettingsRHub.IconsDir..value)
       writefile(SettingsRHub.FolderName..'\\Icons\\'..value, code)
-  
-      OrionLib:MakeNotification({
-        Name = "UI Elements",
-        Content = "Creating "..value..'.',
-        Image = '',
-        Time = 3
-      })
 
       return getsynasset(SettingsRHub.FolderName..'\\Icons\\'..value)
   
     end
-    wait(.3)
   end
   SettingsRHub.Icons[key] = Key()
 
 end
-wait(2-.3)
+OrionLib:MakeNotification({
+  Name = "UI Elements",
+  Content = 'Done downloading.',
+  Image = SettingsRHub.Icons.Download,
+  Time = 2
+})
 if true then
   OrionLib:MakeNotification({
     Name = "RHub | Alert",
