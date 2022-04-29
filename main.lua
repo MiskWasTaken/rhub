@@ -106,10 +106,10 @@ local Main = Window:MakeTab({
 Main:AddButton({
 	Name = "Detect game",
 	Callback = function()
-    OrionLib:Destroy()
-    if game.PlaceId == 0 then
+    if game.PlaceId == 8425637426 then
+      alert('Script being developed for '.. game.PlaceId..'.')
     else
-      notify('Game not found')
+      notify('Game not found.')
     end
   end  
 })
