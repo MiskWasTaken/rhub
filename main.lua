@@ -15,6 +15,10 @@ local SettingsRHub = {
     Alert = 'alert-triangle.png';
     Download = 'download.png';
     Notification = 'bell.png'
+  };
+  SoundsDir = 'Sounds/';
+  Sounds = {
+    Notification = 'hollow-582.mp3'
   }
 }
 if (not isfolder) then
@@ -49,6 +53,31 @@ for key, value in pairs(SettingsRHub.Icons) do
     end
   end
   SettingsRHub.Icons[key] = Key()
+
+end
+
+if not isfolder(SettingsRHub.FolderName..'\\Sounds') then makefolder(SettingsRHub.FolderName..'\\Sounds') end
+for key, value in pairs(SettingsRHub.Icons) do
+
+  Key = function()
+    if isfile(SettingsRHub.FolderName..'\\Sounds\\'..value) then
+
+      local code = game:HttpGet(SettingsRHub.Git..SettingsRHub.SoundsDir..value)
+      delfile(SettingsRHub.FolderName..'\\Sounds\\'..value, code)
+      writefile(SettingsRHub.FolderName..'\\Sounds\\'..value, code)
+
+      return getsynasset(SettingsRHub.FolderName..'\\Sounds\\'..value)
+  
+    else
+      
+      local code = game:HttpGet(SettingsRHub.Git..SettingsRHub.SoundsDir..value)
+      writefile(SettingsRHub.FolderName..'\\Sounds\\'..value, code)
+
+      return getsynasset(SettingsRHub.FolderName..'\\Sounds\\'..value)
+  
+    end
+  end
+  SettingsRHub.Sounds[key] = Key()
 
 end
 
