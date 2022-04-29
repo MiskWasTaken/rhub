@@ -9,9 +9,9 @@ local SettingsRHub = {
   Git = 'https://raw.githubusercontent.com/MiskWasTaken/rhub/main/';
   IconsDir = 'Icons/';
   Icons = {
-    Home = 'home.png';
-    Credits = 'credits.png';
-    LocalPlayer = 'localplayer.png'
+    Home = 'list.png';
+    Credits = 'info.png';
+    LocalPlayer = 'user.png'
   }
 }
 local Window = OrionLib:MakeWindow({Name = "RHub", HidePremium = false, SaveConfig = true, ConfigFolder = SettingsRHub.FolderName})
