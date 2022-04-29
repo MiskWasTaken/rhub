@@ -10,7 +10,8 @@ local SettingsRHub = {
   IconsDir = 'Icons/';
   Icons = {
     Home = 'home.png';
-    Credits = 'credits.png'
+    Credits = 'credits.png';
+    LocalPlayer = 'localplayer.png'
   }
 }
 local Window = OrionLib:MakeWindow({Name = "RHub", HidePremium = false, SaveConfig = true, ConfigFolder = SettingsRHub.FolderName})
@@ -59,11 +60,30 @@ local Main = Window:MakeTab({
 	Icon = SettingsRHub.Icons.Home,
 	PremiumOnly = false
 })
-local Main = Window:MakeTab({
+
+-- LocalPlayer
+local LocalPlayer = Window:MakeTab({
+	Name = "LocalPlayer",
+	Icon = SettingsRHub.Icons.LocalPlayer,
+	PremiumOnly = false
+})
+LocalPlayer:AddButton({
+	Name = "Rejoin",
+	Callback = function()
+    local ts = game:GetService("TeleportService")
+    local p = game:GetService("Players").LocalPlayer
+    ts:Teleport(game.PlaceId, p)
+  end  
+})
+
+-- Credits
+local Credits = Window:MakeTab({
 	Name = "Credits",
 	Icon = SettingsRHub.Icons.Credits,
 	PremiumOnly = false
 })
+Credits:AddParagraph("Misk#4044", "Scripter And Owner")
+Credits:AddParagraph("feathericons.com", "For the icons")
 
 -- Init
 OrionLib:Init()
