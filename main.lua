@@ -61,6 +61,11 @@ local succ, err = pcall(function()
   end
 
   function alert(text)
+    local sound = Instance.new('Sound', game:GetService('SoundService'))
+    sound.SoundId = SettingsRHub.Sounds.Notification
+    sound.Volume = .5
+    sound.PlayOnRemove = true
+    sound:Destroy()
     OrionLib:MakeNotification({
       Name = "RHub | Alert",
       Content = text,
@@ -77,6 +82,11 @@ local succ, err = pcall(function()
     })
   end
   function notify(text)
+    local sound = Instance.new('Sound', game:GetService('SoundService'))
+    sound.SoundId = SettingsRHub.Sounds.Notification
+    sound.Volume = .5
+    sound.PlayOnRemove = true
+    sound:Destroy()
     OrionLib:MakeNotification({
       Name = "RHub | Notification",
       Content = text,
@@ -239,16 +249,11 @@ local succ, err = pcall(function()
 
 end)
 if not succ then
-  if alert then
-    error(err)
-    warn(err)
-  else
-    OrionLib:MakeNotification({
+  OrionLib:MakeNotification({
       Name = "RHub | Error",
       Content = err,
       Image = '',
       Time = 4
-    })
-    warn(err)
-  end
+  })
+  warn(err)
 end
