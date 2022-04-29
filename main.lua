@@ -6,11 +6,11 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local SettingsRHub = {
   FolderName = 'RHubFolderv1';
-  Token = '?token=GHSAT0AAAAAABUBNTAXEMSNNFM3EYUJUPAOYTLCF2Q';
+  Token = '?authorization_request=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';
   Git = 'https://raw.githubusercontent.com/MiskWasTaken/rhub-dev/main/';
   IconsDir = 'Icons/';
   Icons = {
-    Home = 'home.svg'
+    Home = 'home.png'
   }
 }
 local Window = OrionLib:MakeWindow({Name = "RHub", HidePremium = false, SaveConfig = true, ConfigFolder = SettingsRHub.FolderName})
@@ -20,7 +20,7 @@ for key, value in pairs(SettingsRHub.Icons) do
   Key = function()
     if isfile(SettingsRHub.FolderName..'\\Icons\\'..value) then
 
-      local code = game:HttpGet(SettingsRHub.Git..SettingsRHub.IconsDir..value)
+      local code = game:HttpGet(SettingsRHub.Git..SettingsRHub.IconsDir..value..SettingsRHub.Token)
       appendfile(SettingsRHub.FolderName..'\\Icons\\'..value, code)
   
       OrionLib:MakeNotification({
@@ -33,8 +33,8 @@ for key, value in pairs(SettingsRHub.Icons) do
       return getsynasset(SettingsRHub.FolderName..'\\Icons\\'..value)
   
     else
-  
-      local code = game:HttpGet(SettingsRHub.Git..SettingsRHub.IconsDir..value)
+      
+      local code = game:HttpGet(SettingsRHub.Git..SettingsRHub.IconsDir..value..SettingsRHub.Token)
       writefile(SettingsRHub.FolderName..'\\Icons\\'..value, code)
   
       OrionLib:MakeNotification({
@@ -52,12 +52,10 @@ for key, value in pairs(SettingsRHub.Icons) do
 
 end
 
-print(SettingsRHub.Icons.Home)
-
 -- Main
 local Main = Window:MakeTab({
 	Name = "Main",
-	Icon = "rbxassetid://4483345998",
+	Icon = SettingsRHub.Icons.Home,
 	PremiumOnly = false
 })
 
