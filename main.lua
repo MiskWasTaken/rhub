@@ -261,7 +261,6 @@ local succ, err = pcall(function()
       game:GetService("RunService").Stepped:Wait()
     until delete == true
     wait(5)
-    OrionLib:Destroy()
     for key, value in pairs(listfiles(SettingsRHub.FolderName)) do
       if isfolder(value) then
         delfolder(value)
@@ -269,6 +268,8 @@ local succ, err = pcall(function()
         delfile(value)
       end
     end
+    alert('Done.')
+    wait(1)
     loadstring(game:HttpGet("https://raw.githubusercontent.com/MiskWasTaken/rhub/main/main.lua"))()
   end))
 
