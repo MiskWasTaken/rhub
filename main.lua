@@ -10,30 +10,55 @@ local SettingsRHub = {
   Git = 'https://raw.githubusercontent.com/MiskWasTaken/rhub-dev/main/';
   IconsDir = 'Icons/';
   Icons = {
-    'home.svg'
+    Home = 'home.svg'
   }
 }
 local Window = OrionLib:MakeWindow({Name = "RHub", HidePremium = false, SaveConfig = true, ConfigFolder = SettingsRHub.FolderName})
 if not isfolder(SettingsRHub.FolderName..'\\Icons') then makefolder(SettingsRHub.FolderName..'\\Icons') end
 for key, value in pairs(SettingsRHub.Icons) do
-  if isfile(SettingsRHub.FolderName..'\\Icons\\'..value) then
-    appendfile(SettingsRHub.FolderName..'\\Icons\\'..value)
+
+  Key = function()
+    if isfile(SettingsRHub.FolderName..'\\Icons\\'..value) then
+
+      local code = game:HttpGet(SettingsRHub.Git..SettingsRHub.IconsDir..value)
+      appendfile(SettingsRHub.FolderName..'\\Icons\\'..value, code)
+  
+      OrionLib:MakeNotification({
+        Name = "UI Elements",
+        Content = "Updating "..value..'.',
+        Image = '',
+        Time = 1.5
+      })
+
+      return getsynasset(SettingsRHub.FolderName..'\\Icons\\'..value)
+  
+    else
+  
+      local code = game:HttpGet(SettingsRHub.Git..SettingsRHub.IconsDir..value)
+      writefile(SettingsRHub.FolderName..'\\Icons\\'..value, code)
+  
+      OrionLib:MakeNotification({
+        Name = "UI Elements",
+        Content = "Creating "..value..'.',
+        Image = '',
+        Time = 1.5
+      })
+
+      return getsynasset(SettingsRHub.FolderName..'\\Icons\\'..value)
+  
+    end
   end
+  SettingsRHub.Icons[key] = Key()
+
 end
+
+print(SettingsRHub.Icons.Home)
 
 -- Main
 local Main = Window:MakeTab({
 	Name = "Main",
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
-})
-Main:AddButton({
-	Name = "Show Console",
-	Callback = function()
-    rconsoleclear()
-    rconsoleprint('@@RED@@')
-    rconsoleprint('RHub Console')
-  end    
 })
 
 -- Init
