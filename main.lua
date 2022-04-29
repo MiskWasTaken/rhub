@@ -19,7 +19,7 @@ for key, value in pairs(SettingsRHub.Icons) do
   Key = function()
     if isfile(SettingsRHub.FolderName..'\\Icons\\'..value) then
 
-      local code = game:HttpGet(SettingsRHub.Git..SettingsRHub.IconsDir..value..SettingsRHub)
+      local code = game:HttpGet(SettingsRHub.Git..SettingsRHub.IconsDir..value)
       appendfile(SettingsRHub.FolderName..'\\Icons\\'..value, code)
   
       OrionLib:MakeNotification({
