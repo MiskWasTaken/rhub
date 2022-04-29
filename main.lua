@@ -269,7 +269,6 @@ local succ, err = pcall(function()
       end
     end
     alert('Done.')
-    wait(1)
     loadstring(game:HttpGet("https://raw.githubusercontent.com/MiskWasTaken/rhub/main/main.lua"))()
   end))
 
