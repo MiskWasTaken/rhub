@@ -12,7 +12,8 @@ local SettingsRHub = {
     Home = 'list.png';
     Credits = 'info.png';
     LocalPlayer = 'user.png';
-    Alert = 'alert-triangle.png'
+    Alert = 'alert-triangle.png';
+    Download = 'download.png'
   }
 }
 if not isfolder(SettingsRHub.FolderName..'\\Icons') then makefolder(SettingsRHub.FolderName..'\\Icons') end
@@ -29,7 +30,7 @@ for key, value in pairs(SettingsRHub.Icons) do
         Name = "UI Elements",
         Content = "Updating "..value..'.',
         Image = '',
-        Time = 3
+        Time = 2
       })
 
       return getsynasset(SettingsRHub.FolderName..'\\Icons\\'..value)
@@ -49,16 +50,18 @@ for key, value in pairs(SettingsRHub.Icons) do
       return getsynasset(SettingsRHub.FolderName..'\\Icons\\'..value)
   
     end
+    wait(.3)
   end
   SettingsRHub.Icons[key] = Key()
 
 end
+wait(2-.3)
 if true then
   OrionLib:MakeNotification({
     Name = "RHub | Alert",
     Content = 'Missing functions.',
     Image = SettingsRHub.Icons.Alert,
-    Time = 3
+    Time = 4
   })
   return
 end
