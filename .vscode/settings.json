@@ -13,6 +13,9 @@
         "rconsoleprint",
         "rconsoleclear",
         "appendfile",
-        "delfile"
+        "delfile",
+        "messagebox",
+        "listfiles",
+        "delfolder"
     ]
 }

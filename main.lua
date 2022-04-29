@@ -116,6 +116,13 @@ local succ, err = pcall(function()
       Time = time
     })
   end
+  local function detectGame()
+    if game.PlaceId == 8425637426 then
+      alert('Script being developed for '.. game.PlaceId..'.')
+    else
+      notify('Game not found.')
+    end
+  end
 
   if not isfolder(SettingsRHub.FolderName..'\\Sounds') then makefolder(SettingsRHub.FolderName..'\\Sounds') end
   for key, value in pairs(SettingsRHub.Sounds) do
@@ -131,7 +138,6 @@ local succ, err = pcall(function()
     
       else
         
-        print(SettingsRHub.Git..SettingsRHub.SoundsDir..value)
         local code = game:HttpGet(SettingsRHub.Git..SettingsRHub.SoundsDir..value)
         writefile(SettingsRHub.FolderName..'\\Sounds\\'..value, code)
 
@@ -169,11 +175,7 @@ local succ, err = pcall(function()
   Main:AddButton({
     Name = "Detect game",
     Callback = function()
-      if game.PlaceId == 8425637426 then
-        alert('Script being developed for '.. game.PlaceId..'.')
-      else
-        notify('Game not found.')
-      end
+      detectGame()
     end  
   })
   Main:AddButton({
@@ -233,13 +235,42 @@ local succ, err = pcall(function()
   })
   Settings:AddToggle({
     Name = "Auto Detect Game",
-    Default = OrionLib.Flags["AutoDetectGame"].Value or false,
+    Default = false,
     Save = true,
-    Flag = 'AutoDetectGame',
+    Flag = 'AutoDetectGame';
     Callback = function(Value)
-      print(Value)
-    end    
+      if Value == true then
+        detectGame()
+      end
+    end
   })
+  if OrionLib.Flags['AutoDetectGame'].Value == true then
+    detectGame()
+  end
+  local delete
+  Settings:AddButton({
+    Name = "Erase Data",
+    Default = false,
+    Callback = function()
+      alert('Your data is being erased... you have 5 seconds in order to leave and cancel this action.')
+      delete = true
+    end
+  })
+  coroutine.resume(coroutine.create(function()
+    repeat
+      game:GetService("RunService").Stepped:Wait()
+    until delete == true
+    wait(5)
+    OrionLib:Destroy()
+    for key, value in pairs(listfiles(SettingsRHub.FolderName)) do
+      if isfolder(value) then
+        delfolder(value)
+      elseif isfile(value) then
+        delfile(value)
+      end
+    end
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/MiskWasTaken/rhub/main/main.lua"))()
+  end))
 
   -- Credits
   local Credits = Window:MakeTab({
