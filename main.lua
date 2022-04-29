@@ -24,6 +24,7 @@ local succ, err = pcall(function()
       Notification = 'hollow-582.mp3'
     }
   }
+
   if (not isfolder) then
     OrionLib:MakeNotification({
       Name = "RHub | Error",
@@ -184,6 +185,14 @@ local succ, err = pcall(function()
     TextDisappear = true,
     Callback = function(Value)
       notcustom(Value, 'Made By User', SettingsRHub.Icons.LocalPlayer, 3)
+    end	 
+  })
+  Testing:AddTextbox({
+    Name = "Error",
+    Default = "Gay people",
+    TextDisappear = true,
+    Callback = function(Value)
+      error(Value)
     end	 
   })
   Testing:AddTextbox({
