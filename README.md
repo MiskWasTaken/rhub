@@ -1,4 +1,5 @@
-Insert this in github please
+# What is this for
+Roblox lua yk
 # Credits
 Misk the pro B)
 # How to Use
