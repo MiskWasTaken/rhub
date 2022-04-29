@@ -109,6 +109,7 @@ local LocalPlayer = Window:MakeTab({
 LocalPlayer:AddButton({
 	Name = "Rejoin",
 	Callback = function()
+    alert('Rejoining...')
     local ts = game:GetService("TeleportService")
     local p = game:GetService("Players").LocalPlayer
     ts:Teleport(game.PlaceId, p)
