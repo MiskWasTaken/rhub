@@ -57,7 +57,7 @@ function alert(text)
     Name = "RHub | Alert",
     Content = text,
     Image = SettingsRHub.Icons.Alert,
-    Time = 2
+    Time = 4
   })
 end
 function notify(text)
@@ -65,17 +65,18 @@ function notify(text)
     Name = "RHub | Notification",
     Content = text,
     Image = SettingsRHub.Icons.Notification,
-    Time = 2
+    Time = 3
   })
 end
-function notcustom(text, additional, image)
+function notcustom(text, additional, image, time)
   local title = ("RHub | ".. additional) or ('RHub')
   local image = image or ''
+  local time = time or 3
   OrionLib:MakeNotification({
     Name = title,
     Content = text,
     Image = image,
-    Time = 2
+    Time = time
   })
 end
 
@@ -133,7 +134,7 @@ Testing:AddTextbox({
 	Default = "Hello.",
 	TextDisappear = true,
 	Callback = function(Value)
-		notcustom(Value, 'Made By User', SettingsRHub.Icons.LocalPlayer)
+		notcustom(Value, 'Made By User', SettingsRHub.Icons.LocalPlayer, 3)
 	end	 
 })
 Testing:AddTextbox({
