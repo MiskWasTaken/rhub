@@ -6,8 +6,7 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local SettingsRHub = {
   FolderName = 'RHubFolderv1';
-  Token = '?authorization_request=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';
-  Git = 'https://raw.githubusercontent.com/MiskWasTaken/rhub-dev/main/';
+  Git = 'https://raw.githubusercontent.com/MiskWasTaken/rhub/main/';
   IconsDir = 'Icons/';
   Icons = {
     Home = 'home.png'
@@ -20,7 +19,7 @@ for key, value in pairs(SettingsRHub.Icons) do
   Key = function()
     if isfile(SettingsRHub.FolderName..'\\Icons\\'..value) then
 
-      local code = game:HttpGet(SettingsRHub.Git..SettingsRHub.IconsDir..value..SettingsRHub.Token)
+      local code = game:HttpGet(SettingsRHub.Git..SettingsRHub.IconsDir..value..SettingsRHub)
       appendfile(SettingsRHub.FolderName..'\\Icons\\'..value, code)
   
       OrionLib:MakeNotification({
@@ -34,7 +33,7 @@ for key, value in pairs(SettingsRHub.Icons) do
   
     else
       
-      local code = game:HttpGet(SettingsRHub.Git..SettingsRHub.IconsDir..value..SettingsRHub.Token)
+      local code = game:HttpGet(SettingsRHub.Git..SettingsRHub.IconsDir..value)
       writefile(SettingsRHub.FolderName..'\\Icons\\'..value, code)
   
       OrionLib:MakeNotification({
