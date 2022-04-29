@@ -26,7 +26,7 @@ for key, value in pairs(SettingsRHub.Icons) do
         Name = "UI Elements",
         Content = "Updating "..value..'.',
         Image = '',
-        Time = 1.5
+        Time = 3
       })
 
       return getsynasset(SettingsRHub.FolderName..'\\Icons\\'..value)
@@ -40,7 +40,7 @@ for key, value in pairs(SettingsRHub.Icons) do
         Name = "UI Elements",
         Content = "Creating "..value..'.',
         Image = '',
-        Time = 1.5
+        Time = 3
       })
 
       return getsynasset(SettingsRHub.FolderName..'\\Icons\\'..value)
