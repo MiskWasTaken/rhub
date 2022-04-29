@@ -11,10 +11,10 @@ local SettingsRHub = {
   Icons = {
     Home = 'list.png';
     Credits = 'info.png';
-    LocalPlayer = 'user.png'
+    LocalPlayer = 'user.png';
+    Alert = 'alert-triangle.png'
   }
 }
-local Window = OrionLib:MakeWindow({Name = "RHub", HidePremium = false, SaveConfig = true, ConfigFolder = SettingsRHub.FolderName})
 if not isfolder(SettingsRHub.FolderName..'\\Icons') then makefolder(SettingsRHub.FolderName..'\\Icons') end
 for key, value in pairs(SettingsRHub.Icons) do
 
@@ -53,7 +53,15 @@ for key, value in pairs(SettingsRHub.Icons) do
   SettingsRHub.Icons[key] = Key()
 
 end
-
+if (not writefile) then
+  OrionLib:MakeNotification({
+    Name = "UI Elements",
+    Content = "Updating "..value..'.',
+    Image = '',
+    Time = 3
+  })
+end
+local Window = OrionLib:MakeWindow({Name = "RHub", HidePremium = false, SaveConfig = true, ConfigFolder = SettingsRHub.FolderName})
 -- Main
 local Main = Window:MakeTab({
 	Name = "Main",
