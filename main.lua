@@ -9,7 +9,8 @@ local SettingsRHub = {
   Git = 'https://raw.githubusercontent.com/MiskWasTaken/rhub/main/';
   IconsDir = 'Icons/';
   Icons = {
-    Home = 'home.png'
+    Home = 'home.png';
+    Credits = 'credits.png'
   }
 }
 local Window = OrionLib:MakeWindow({Name = "RHub", HidePremium = false, SaveConfig = true, ConfigFolder = SettingsRHub.FolderName})
@@ -55,6 +56,11 @@ end
 local Main = Window:MakeTab({
 	Name = "Main",
 	Icon = SettingsRHub.Icons.Home,
+	PremiumOnly = false
+})
+local Main = Window:MakeTab({
+	Name = "Credits",
+	Icon = SettingsRHub.Icons.Credits,
 	PremiumOnly = false
 })
 
