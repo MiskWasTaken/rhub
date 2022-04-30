@@ -22,7 +22,8 @@ local succ, err = pcall(function()
       Notification = 'bell.png';
       Error = 'alert-octagon.png';
       Settings = 'settings.png';
-      Music = 'music.png'
+      Music = 'music.png';
+      Video = 'video.png'
     };
     SoundsDir = 'Sounds/';
     Sounds = {
@@ -187,6 +188,7 @@ local succ, err = pcall(function()
     Icon = SettingsRHub.Icons.Home,
     PremiumOnly = false
   })
+  Main:AddLabel('General')
   Main:AddButton({
     Name = "Detect game",
     Callback = function()
@@ -215,13 +217,15 @@ local succ, err = pcall(function()
       game:GetService("Workspace").CurrentCamera.FieldOfView = Value
     end    
   })
-  local oldfov = game:GetService("Workspace").CurrentCamera.FieldOfView
+  if not getgenv().oldfov then
+    getgenv().oldfov = game:GetService("Workspace").CurrentCamera.FieldOfView
+  end
   Main:AddButton({
     Name = "Reset Fov",
     Callback = function()
-      game:GetService("Workspace").CurrentCamera.FieldOfView = oldfov
-      FovSlider:Set(oldfov)
-      custom
+      game:GetService("Workspace").CurrentCamera.FieldOfView = getgenv().oldfov
+      FovSlider:Set(getgenv().oldfov)
+      notcustom('Fov set to '..(math.floor(getgenv().oldfov*10)/10)..'.', 'Fov Manager', SettingsRHub.Icons.Video, 3)
     end  
   })
 
