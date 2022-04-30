@@ -190,7 +190,7 @@ local succ, err = pcall(function()
       ts:Teleport(game.PlaceId, p)
     end  
   })
-  Main:AddParagraph('Fov Manager', [[Field of view, often shortened to FOV, is the extent of the observable game world that can be seen on screen at a given moment.]])
+  Main:AddLabel('Camera Manager')
   local FovSlider = Main:AddSlider({
     Name = "Fov",
     Min = 1,
@@ -211,8 +211,16 @@ local succ, err = pcall(function()
     Callback = function()
       game:GetService("Workspace").CurrentCamera.FieldOfView = getgenv().oldfov
       FovSlider:Set(getgenv().oldfov)
-      notcustom('Fov set to '..(math.floor(getgenv().oldfov*10)/10)..'.', 'Fov Manager', SettingsRHub.Icons.Video, 3)
+      notcustom('Fov set to '..(math.floor(getgenv().oldfov*10)/10)..'.', 'Camera Manager', SettingsRHub.Icons.Video, 3)
     end  
+  })
+  Main:AddToggle({
+    Name = "Shiftlock",
+    Default = game:GetService("Players").LocalPlayer.DevEnableMouseLock,
+    Color = Color3.fromRGB(166,0,0),
+    Callback = function(Value)
+      game:GetService("Players").LocalPlayer.DevEnableMouseLock = Value
+    end
   })
   Main:AddParagraph('WalkSpeed Manager', [[WalkSpeed is a property that describes how quickly this Humanoid is able to walk, in studs per second.]])
   Main:AddTextbox({
