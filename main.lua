@@ -190,7 +190,7 @@ local succ, err = pcall(function()
       ts:Teleport(game.PlaceId, p)
     end  
   })
-  Main:AddLabel('Camera Manager')
+  Main:AddParagraph('Camera Manager', [[The Camera object defines a view of the 3D game world.]])
   local FovSlider = Main:AddSlider({
     Name = "Fov",
     Min = 1,
