@@ -251,6 +251,17 @@ local succ, err = pcall(function()
       game:GetService("Players").LocalPlayer.Character:WaitForChild('Humanoid').WalkSpeed = getgenv().oldwalkspeed
     end    
   })
+  Main:AddParagraph('Character Manager', [[The Character property contains a reference to a Model containing a Humanoid, body parts, scripts and other objects required for simulating the player’s avatar in-game.]])
+  Main:AddButton({
+    Name = "Refresh",
+    Callback = function()
+      local oldcframe = game:GetService("Players").LocalPlayer.Character:WaitForChild('HumanoidRootPart').CFrame
+      notcustom('Your character is being refreshed.', 'Character Manager', SettingsRHub.Icons.LocalPlayer, 3)
+      game:GetService("Players").LocalPlayer.Character:WaitForChild('Humanoid').Health = 0
+      wait(game:GetService("Players").RespawnTime)
+      game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame = oldcframe
+    end
+  })
 
   -- Music
   local Music = Window:MakeTab({
