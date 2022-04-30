@@ -202,6 +202,28 @@ local succ, err = pcall(function()
       ts:Teleport(game.PlaceId, p)
     end  
   })
+  Main:AddLabel('Fov Manager')
+  local FovSlider = Main:AddSlider({
+    Name = "Fov",
+    Min = 1,
+    Max = 120,
+    Default = game:GetService("Workspace").CurrentCamera.FieldOfView,
+    Color = Color3.fromRGB(160,0,0),
+    Increment = 1,
+    ValueName = "",
+    Callback = function(Value)
+      game:GetService("Workspace").CurrentCamera.FieldOfView = Value
+    end    
+  })
+  local oldfov = game:GetService("Workspace").CurrentCamera.FieldOfView
+  Main:AddButton({
+    Name = "Reset Fov",
+    Callback = function()
+      game:GetService("Workspace").CurrentCamera.FieldOfView = oldfov
+      FovSlider:Set(oldfov)
+      custom
+    end  
+  })
 
   -- Main
   local Music = Window:MakeTab({
