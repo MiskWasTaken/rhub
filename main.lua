@@ -220,6 +220,11 @@ local succ, err = pcall(function()
     Color = Color3.fromRGB(166,0,0),
     Callback = function(Value)
       game:GetService("Players").LocalPlayer.DevEnableMouseLock = Value
+      if scriptexecuted == true and Value == true then
+        notcustom('Shiftlock enabled', 'Camera Manager', SettingsRHub.Icons.Video, 3)
+      elseif scriptexecuted == true then
+        notcustom('Shiftlock disabled', 'Camera Manager', SettingsRHub.Icons.Video, 3)
+      end
     end
   })
   Main:AddParagraph('WalkSpeed Manager', [[WalkSpeed is a property that describes how quickly this Humanoid is able to walk, in studs per second.]])
