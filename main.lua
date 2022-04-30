@@ -31,10 +31,10 @@ local succ, err = pcall(function()
     }
   }
 
-  if (not isfolder) then
+  if (not isfolder) or (not getsynasset) then
     OrionLib:MakeNotification({
       Name = "RHub | Error",
-      Content = 'Missing functions, find a better executor you retard.\nMissing Functions:\nFilesystem Functions',
+      Content = 'Missing functions',
       Image = '',
       Time = 4
     })
@@ -167,20 +167,6 @@ local succ, err = pcall(function()
 
   notcustom('Done downloading.', 'UI Elements', SettingsRHub.Icons.Notification)
 
-  if (not getsynasset) then
-    local textfile = 'Missing functions:'
-    if not getsynasset then
-      textfile = textfile..'\ngetsynasset'
-    end
-    OrionLib:MakeNotification({
-      Name = "RHub | Alert",
-      Content = textfile,
-      Image = SettingsRHub.Icons.Alert,
-      Time = 4
-    })
-    return
-  end
-
   local Window = OrionLib:MakeWindow({Name = "RHub | General", HidePremium = false, SaveConfig = true, ConfigFolder = SettingsRHub.FolderName})
   -- Main
   local Main = Window:MakeTab({
@@ -204,7 +190,7 @@ local succ, err = pcall(function()
       ts:Teleport(game.PlaceId, p)
     end  
   })
-  Main:AddLabel('Fov Manager')
+  Main:AddParagraph('Fov Manager', [[Field of view, often shortened to FOV, is the extent of the observable game world that can be seen on screen at a given moment.]])
   local FovSlider = Main:AddSlider({
     Name = "Fov",
     Min = 1,
@@ -229,7 +215,7 @@ local succ, err = pcall(function()
     end  
   })
 
-  -- Main
+  -- Music
   local Music = Window:MakeTab({
     Name = "Music",
     Icon = SettingsRHub.Icons.Music,
@@ -346,6 +332,7 @@ local succ, err = pcall(function()
     Icon = SettingsRHub.Icons.Settings,
     PremiumOnly = false
   })
+  Settings:AddLabel('Settings')
   Settings:AddToggle({
     Name = "Auto Detect Game",
     Default = DefaultPlayerSettings.AutoDetectGame,
