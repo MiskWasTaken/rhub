@@ -214,6 +214,30 @@ local succ, err = pcall(function()
       notcustom('Fov set to '..(math.floor(getgenv().oldfov*10)/10)..'.', 'Fov Manager', SettingsRHub.Icons.Video, 3)
     end  
   })
+  Main:AddParagraph('WalkSpeed Manager', [[WalkSpeed is a property that describes how quickly this Humanoid is able to walk, in studs per second.]])
+  Main:AddTextbox({
+    Name = "WalkSpeed",
+    Default = tostring(game:GetService("Players").LocalPlayer.Character:WaitForChild('Humanoid').WalkSpeed),
+    TextDisappear = false,
+    Callback = function(Value)
+      if tonumber(Value) then
+        game:GetService("Players").LocalPlayer.Character:WaitForChild('Humanoid').WalkSpeed = Value
+        notcustom('Walkspeed set to '..string.gsub(Value, ' ', '')..'.', 'WalkSpeed Manager', SettingsRHub.Icons.Settings)
+      else
+        error(Value..' is bad value.')
+      end
+    end	  
+  })
+  if not getgenv().oldwalkspeed then
+    getgenv().oldwalkspeed = game:GetService("Players").LocalPlayer.Character:WaitForChild('Humanoid').WalkSpeed
+  end
+  Main:AddButton({
+    Name = "Reset WalkSpeed",
+    Callback = function()
+      notcustom('Walkspeed set to '..string.gsub(getgenv().oldwalkspeed, ' ', '')..'.', 'WalkSpeed Manager', SettingsRHub.Icons.Settings)
+      game:GetService("Players").LocalPlayer.Character:WaitForChild('Humanoid').WalkSpeed = getgenv().oldwalkspeed
+    end    
+  })
 
   -- Music
   local Music = Window:MakeTab({
@@ -280,8 +304,12 @@ local succ, err = pcall(function()
     Default = "0:00",
     TextDisappear = false,
     Callback = function(Value)
-      getgenv().MusicRHUBInstance.TimePosition = tonumber((string.gsub(Value, ':', '')))
-      notcustom("Music's is now set to: "..string.gsub(Value, ' ', '')..'.', 'Music Manager', SettingsRHub.Icons.Music, 3)
+      if tonumber(string.gsub(Value, ':', '')) ~= nil then
+        getgenv().MusicRHUBInstance.TimePosition = tonumber((string.gsub(Value, ':', '')))
+        notcustom("Music's is now set to: "..string.gsub(Value, ' ', '')..'.', 'Music Manager', SettingsRHub.Icons.Music, 3)
+      else
+        error(Value..' is bad value.')
+      end
     end	  
   })
   Music:AddToggle({
