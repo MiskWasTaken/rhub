@@ -259,7 +259,10 @@ local succ, err = pcall(function()
       notcustom('Your character is being refreshed.', 'Character Manager', SettingsRHub.Icons.LocalPlayer, 3)
       game:GetService("Players").LocalPlayer.Character:WaitForChild('Humanoid').Health = 0
       wait(game:GetService("Players").RespawnTime)
-      game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame = oldcframe
+      repeat
+        game:GetService("RunService").Stepped:Wait()
+        game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame = oldcframe
+      until game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame == oldcframe
     end
   })
 
