@@ -5,9 +5,11 @@ local succ, err = pcall(function()
   -- Love <3
 
   -- Starting variables
+  local HttpService = game:GetService('HttpService')
   OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
   local SettingsRHub = {
     FolderName = 'RHubFolderv1';
+    SettingsFolderName = '\\GeneralSettings.lua';
     Git = 'https://raw.githubusercontent.com/MiskWasTaken/rhub/main/';
     IconsDir = 'Icons/';
     Icons = {
@@ -34,6 +36,16 @@ local succ, err = pcall(function()
       Time = 4
     })
     return
+  end
+
+  local DefaultPlayerSettings = {
+    AutoDetectGame = false
+  }
+
+  if not isfile(SettingsRHub.FolderName..SettingsRHub.SettingsFolderName) then
+    writefile(SettingsRHub.FolderName..SettingsRHub.SettingsFolderName, HttpService:JSONEncode(DefaultPlayerSettings))
+  else
+    DefaultPlayerSettings = HttpService:JSONDecode(readfile(SettingsRHub.FolderName..SettingsRHub.SettingsFolderName))
   end
 
   if not isfolder(SettingsRHub.FolderName..'\\Icons') then makefolder(SettingsRHub.FolderName..'\\Icons') end
@@ -123,6 +135,16 @@ local succ, err = pcall(function()
       notify('Game not found.')
     end
   end
+  local function giveFlag(text, default)
+    local _,_, x = pcall(function()
+      if OrionLib.Flags[text] then
+        return OrionLib.Flags[text].Value
+      else
+        return default
+      end
+    end)
+    return x
+  end
 
   if not isfolder(SettingsRHub.FolderName..'\\Sounds') then makefolder(SettingsRHub.FolderName..'\\Sounds') end
   for key, value in pairs(SettingsRHub.Sounds) do
@@ -188,45 +210,6 @@ local succ, err = pcall(function()
     end  
   })
 
-  -- Testing
-  local Testing = Window:MakeTab({
-    Name = "Testing | PO",
-    Icon = SettingsRHub.Icons.Alert,
-    PremiumOnly = true
-  })
-  Testing:AddTextbox({
-    Name = "Alert Notification",
-    Default = "YOUR GAY!!!!",
-    TextDisappear = true,
-    Callback = function(Value)
-      alert(Value)
-    end	  
-  })
-  Testing:AddTextbox({
-    Name = "Custom Notification (Only Text)",
-    Default = "Hello.",
-    TextDisappear = true,
-    Callback = function(Value)
-      notcustom(Value, 'Made By User', SettingsRHub.Icons.LocalPlayer, 3)
-    end	 
-  })
-  Testing:AddTextbox({
-    Name = "Error",
-    Default = "Gay people",
-    TextDisappear = true,
-    Callback = function(Value)
-      error(Value)
-    end	 
-  })
-  Testing:AddTextbox({
-    Name = "Notification",
-    Default = "Free Bobux",
-    TextDisappear = true,
-    Callback = function(Value)
-      notify(Value)
-    end	 
-  })
-
   -- Settings
   local Settings = Window:MakeTab({
     Name = "Settings",
@@ -235,18 +218,16 @@ local succ, err = pcall(function()
   })
   Settings:AddToggle({
     Name = "Auto Detect Game",
-    Default = false,
-    Save = true,
-    Flag = 'AutoDetectGame';
+    Default = DefaultPlayerSettings.AutoDetectGame,
+    Color = Color3.fromRGB(150, 0, 0);
     Callback = function(Value)
       if Value == true then
         detectGame()
       end
+      DefaultPlayerSettings.AutoDetectGame = Value
+      writefile(SettingsRHub.FolderName..SettingsRHub.SettingsFolderName, HttpService:JSONEncode(DefaultPlayerSettings))
     end
   })
-  if OrionLib.Flags['AutoDetectGame'].Value == true then
-    detectGame()
-  end
   local delete
   Settings:AddButton({
     Name = "Erase Data",
@@ -260,7 +241,7 @@ local succ, err = pcall(function()
     repeat
       game:GetService("RunService").Stepped:Wait()
     until delete == true
-    wait(5)
+    wait(5) 
     for key, value in pairs(listfiles(SettingsRHub.FolderName)) do
       if isfolder(value) then
         delfolder(value)
@@ -268,8 +249,13 @@ local succ, err = pcall(function()
         delfile(value)
       end
     end
-    alert('Done.')
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/MiskWasTaken/rhub/main/main.lua"))()
+    game:GetService("StarterGui"):SetCore('SendNotification', {
+      Button1 = 'Ok';
+      Duration = 4;
+      Title = 'RHub | Alert';
+      Text = 'Done.'
+    })
+    game:GetService("CoreGui"):FindFirstChild('Orion'):Destroy()
   end))
 
   -- Credits
