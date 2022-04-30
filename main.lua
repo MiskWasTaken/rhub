@@ -5,6 +5,7 @@ local succ, err = pcall(function()
   -- Love <3
 
   -- Starting variables
+  local scriptexecuted
   local HttpService = game:GetService('HttpService')
   OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
   local SettingsRHub = {
@@ -20,7 +21,8 @@ local succ, err = pcall(function()
       Download = 'download.png';
       Notification = 'bell.png';
       Error = 'alert-octagon.png';
-      Settings = 'settings.png'
+      Settings = 'settings.png';
+      Music = 'music.png'
     };
     SoundsDir = 'Sounds/';
     Sounds = {
@@ -39,7 +41,9 @@ local succ, err = pcall(function()
   end
 
   local DefaultPlayerSettings = {
-    AutoDetectGame = false
+    AutoDetectGame = false;
+    MusicVolume = .5;
+    ToggleButton = Enum.KeyCode.KeypadMinus.Name
   }
 
   if not isfile(SettingsRHub.FolderName..SettingsRHub.SettingsFolderName) then
@@ -129,21 +133,10 @@ local succ, err = pcall(function()
     })
   end
   local function detectGame()
-    if game.PlaceId == 8425637426 then
-      alert('Script being developed for '.. game.PlaceId..'.')
+    if false then
     else
       notify('Game not found.')
     end
-  end
-  local function giveFlag(text, default)
-    local _,_, x = pcall(function()
-      if OrionLib.Flags[text] then
-        return OrionLib.Flags[text].Value
-      else
-        return default
-      end
-    end)
-    return x
   end
 
   if not isfolder(SettingsRHub.FolderName..'\\Sounds') then makefolder(SettingsRHub.FolderName..'\\Sounds') end
@@ -210,6 +203,117 @@ local succ, err = pcall(function()
     end  
   })
 
+  -- Main
+  local Music = Window:MakeTab({
+    Name = "Music",
+    Icon = SettingsRHub.Icons.Music,
+    PremiumOnly = false
+  })
+  if not isfolder(SettingsRHub.FolderName..'\\MusicFile') then
+    makefolder(SettingsRHub.FolderName..'\\MusicFile')
+  end
+  if not getgenv().MusicRHUBInstance then
+    getgenv().MusicRHUBInstance = Instance.new('Sound', game:GetService("SoundService"))
+    getgenv().MusicRHUBInstance.Volume = DefaultPlayerSettings.MusicVolume
+  end
+  Music:AddParagraph('How to add custom music', "A folder in the script's settings has been created ("..SettingsRHub.FolderName..'/MusicFile/)')
+  Music:AddButton({
+    Name = "Load file",
+    Callback = function()
+      if #(listfiles(SettingsRHub.FolderName..'\\MusicFile')) == 1 then
+        getgenv().MusicRHUBInstance.SoundId = getsynasset(listfiles(SettingsRHub.FolderName..'\\MusicFile')[1])
+        local filename = listfiles(SettingsRHub.FolderName..'\\MusicFile')[1]
+        filename = string.split(filename, [[\]])
+        filename = filename[#filename]
+        notcustom("Loaded file:\n"..filename..'.', 'Music Manager', SettingsRHub.Icons.Music, 3)
+      else
+        notcustom("Insert a file in the folder!", 'Music Manager', SettingsRHub.Icons.Music, 3)
+      end
+    end 
+  })
+  Music:AddSlider({
+    Name = "Volume",
+    Min = 0,
+    Max = 500,
+    Default = DefaultPlayerSettings.MusicVolume*100,
+    Color = Color3.fromRGB(160, 0, 0),
+    Increment = 1,
+    ValueName = "",
+    Callback = function(Value)
+      getgenv().MusicRHUBInstance.Volume = Value/100
+      DefaultPlayerSettings.MusicVolume = Value/100
+      writefile(SettingsRHub.FolderName..SettingsRHub.SettingsFolderName, HttpService:JSONEncode(DefaultPlayerSettings))
+    end    
+  })
+  local Time = Music:AddParagraph('Time', '0:00/0:00')
+  coroutine.resume(coroutine.create(function()
+    pcall(function()
+      while game:GetService('RunService').Stepped:Wait() do
+        local Cm = math.floor(getgenv().MusicRHUBInstance.TimePosition/100) or 0
+        local Cs = math.floor(getgenv().MusicRHUBInstance.TimePosition-Cm*100) or 0
+        if Cs < 10 then
+            Cs = '0'..Cs
+        end
+        local Mm = math.floor(getgenv().MusicRHUBInstance.TimeLength/100) or 0
+        local Ms = math.floor(getgenv().MusicRHUBInstance.TimeLength-Mm*100) or 0
+        if Ms < 10 then
+            Ms = '0'..Ms
+        end
+        Time:Set(Cm..':'..Cs..'/'..Mm..':'..Ms)
+      end
+    end)
+  end))
+  Music:AddTextbox({
+    Name = "Set Time",
+    Default = "0:00",
+    TextDisappear = false,
+    Callback = function(Value)
+      getgenv().MusicRHUBInstance.TimePosition = tonumber((string.gsub(Value, ':', '')))
+      notcustom("Music's is now set to: "..string.gsub(Value, ' ', '')..'.', 'Music Manager', SettingsRHub.Icons.Music, 3)
+    end	  
+  })
+  Music:AddToggle({
+    Name = "Looped",
+    Default = getgenv().MusicRHUBInstance.Looped,
+    Color = Color3.fromRGB(160, 0, 0),
+    Callback = function(Value)
+      getgenv().MusicRHUBInstance.Looped = Value
+      if Value == true and scriptexecuted == true then
+        notcustom("Music's is now looped.", 'Music Manager', SettingsRHub.Icons.Music, 3)
+      elseif scriptexecuted == true then
+        notcustom("Music's is not looped.", 'Music Manager', SettingsRHub.Icons.Music, 3)
+      end
+    end    
+  })
+  Music:AddButton({
+    Name = "Play",
+    Callback = function()
+      getgenv().MusicRHUBInstance:Play()
+      notcustom("Music's playing.", 'Music Manager', SettingsRHub.Icons.Music, 3)
+    end 
+  })
+  Music:AddButton({
+    Name = "Stop",
+    Callback = function()
+      getgenv().MusicRHUBInstance:Stop()
+      notcustom("Music's stopped.", 'Music Manager', SettingsRHub.Icons.Music, 3)
+    end 
+  })
+  Music:AddButton({
+    Name = "Pause",
+    Callback = function()
+      getgenv().MusicRHUBInstance:Pause()
+      notcustom("Music's paused.", 'Music Manager', SettingsRHub.Icons.Music, 3)
+    end 
+  })
+  Music:AddButton({
+    Name = "Resume",
+    Callback = function()
+      getgenv().MusicRHUBInstance:Resume()
+      notcustom("Music's resumed.", 'Music Manager', SettingsRHub.Icons.Music, 3)
+    end 
+  })
+
   -- Settings
   local Settings = Window:MakeTab({
     Name = "Settings",
@@ -219,7 +323,7 @@ local succ, err = pcall(function()
   Settings:AddToggle({
     Name = "Auto Detect Game",
     Default = DefaultPlayerSettings.AutoDetectGame,
-    Color = Color3.fromRGB(150, 0, 0);
+    Color = Color3.fromRGB(160, 0, 0);
     Callback = function(Value)
       if Value == true then
         detectGame()
@@ -257,6 +361,19 @@ local succ, err = pcall(function()
     })
     game:GetService("CoreGui"):FindFirstChild('Orion'):Destroy()
   end))
+  local UI = game:GetService("CoreGui"):FindFirstChild("Orion")
+  Settings:AddBind({
+    Name = "Toggle Ui",
+    Default = Enum.KeyCode[DefaultPlayerSettings.ToggleButton],
+    Hold = false,
+    Save = true,
+    Flag = 'ToggleUI',
+    Callback = function()
+      if UI then
+        UI.Enabled = not UI.Enabled
+      end
+    end
+  })
 
   -- Credits
   local Credits = Window:MakeTab({
@@ -270,6 +387,7 @@ local succ, err = pcall(function()
 
   -- Init
   OrionLib:Init()
+  scriptexecuted = true
 
   --⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
   --⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣶⣿⣿⣿⣿⣿⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
