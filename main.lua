@@ -260,8 +260,8 @@ local succ, err = pcall(function()
       game:GetService("Players").LocalPlayer.Character:WaitForChild('Humanoid').Health = 0
       wait(game:GetService("Players").RespawnTime)
       repeat
-        game:GetService("RunService").Stepped:Wait()
         game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame = oldcframe
+        game:GetService("RunService").Stepped:Wait()
       until game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").CFrame == oldcframe
     end
   })
