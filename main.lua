@@ -328,7 +328,7 @@ local succ, err = pcall(function()
     Default = "0:00",
     TextDisappear = false,
     Callback = function(Value)
-      if tonumber(string.gsub(Value, ':', '')) ~= nil then
+      if tonumber((string.gsub(Value, ':', ''))) ~= nil then
         getgenv().MusicRHUBInstance.TimePosition = tonumber((string.gsub(Value, ':', '')))
         notcustom("Music's is now set to: "..string.gsub(Value, ' ', '')..'.', 'Music Manager', SettingsRHub.Icons.Music, 3)
       else
