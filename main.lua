@@ -221,9 +221,9 @@ local succ, err = pcall(function()
     Callback = function(Value)
       game:GetService("Players").LocalPlayer.DevEnableMouseLock = Value
       if scriptexecuted == true and Value == true then
-        notcustom('Shiftlock enabled', 'Camera Manager', SettingsRHub.Icons.Video, 3)
+        notcustom('Shiftlock enabled.', 'Camera Manager', SettingsRHub.Icons.Video, 3)
       elseif scriptexecuted == true then
-        notcustom('Shiftlock disabled', 'Camera Manager', SettingsRHub.Icons.Video, 3)
+        notcustom('Shiftlock disabled.', 'Camera Manager', SettingsRHub.Icons.Video, 3)
       end
     end
   })
