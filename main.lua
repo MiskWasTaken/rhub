@@ -21,7 +21,8 @@ local SettingsRHub = {
     Error = 'alert-octagon.png';
     Settings = 'settings.png';
     Music = 'music.png';
-    Video = 'video.png'
+    Video = 'video.png';
+    Smile = 'smile.png'
   };
   SoundsDir = 'Sounds/';
   Sounds = {
@@ -153,7 +154,7 @@ local Window = OrionLib:MakeWindow({Name = "RHub | General", HidePremium = false
 -- LocalPlayer
 local LocalPlayer = Window:MakeTab({
   Name = "LocalPlayer",
-  Icon = SettingsRHub.Icons.Home,
+  Icon = SettingsRHub.Icons.LocalPlayer,
   PremiumOnly = false
 })
 LocalPlayer:AddLabel('General')
@@ -170,16 +171,6 @@ LocalPlayer:AddButton({
     local ts = game:GetService("TeleportService")
     local p = game:GetService("Players").LocalPlayer
     ts:Teleport(game.PlaceId, p)
-  end  
-})
-LocalPlayer:AddButton({
-  Name = "Friend A fucking nigger",
-  Callback = function()
-    game:GetService("StarterGui"):SetCore('SendNotification', {
-      Title = 'New Friend';
-      Text = 'A fucking Nigger';
-      Icon = 'rbxassetid://677844346'
-    })
   end  
 })
 LocalPlayer:AddParagraph('Camera Manager', [[The Camera object defines a view of the 3D game world.]])
@@ -373,6 +364,27 @@ Music:AddButton({
     getgenv().MusicRHUBInstance:Resume()
     notcustom("Music's resumed.", 'Music Manager', SettingsRHub.Icons.Music, 3)
   end 
+})
+local Funni = Window:MakeTab({
+  Name = "Funni",
+  Icon = SettingsRHub.Icons.Smile,
+  PremiumOnly = false
+})
+Funni:AddButton({
+  Name = "Friend A fucking nigger",
+  Callback = function()
+    game:GetService("StarterGui"):SetCore('SendNotification', {
+      Title = 'New Friend';
+      Text = 'A fucking Nigger';
+      Icon = 'rbxassetid://677844346'
+    })
+  end  
+})
+Funni:AddButton({
+  Name = "fucking die",
+  Callback = function()
+    game:Shutdown()
+  end  
 })
 -- Settings
 local Settings = Window:MakeTab({
