@@ -134,7 +134,8 @@ local succ, err = pcall(function()
     })
   end
   local function detectGame()
-    if false then
+    if game:GetService("HttpService"):JSONDecode(game:HttpGet('https://api.roblox.com/universes/get-universe-containing-place?placeid='..game.PlaceId))['UniverseId'] == 1720936166 then
+      loadstring(game:HttpGet(SettingsRHub.Git..'\\GamesScripts'..'1720936166.lua'))
     else
       notify('Game not found.')
     end

@@ -1,6 +1,6 @@
 local alert, notify, notcustom, OrionLib, error
 local succ, err = pcall(function()
-  -- main.lua v1.0 Rewrite
+  -- LocalPlayer.lua v1.0 Rewrite
   -- Made by Misk#4044
   -- Love <3
 
@@ -8,9 +8,10 @@ local succ, err = pcall(function()
   local scriptexecuted
   local HttpService = game:GetService('HttpService')
   OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+  local GameName = ''
   local SettingsRHub = {
     FolderName = 'RHubFolderv1';
-    SettingsFolderName = '\\GeneralSettings.lua';
+    SettingsFolderName = '\\'..GameName..'Settings.lua';
     Git = 'https://raw.githubusercontent.com/MiskWasTaken/rhub/main/';
     IconsDir = 'Icons/';
     Icons = {
@@ -46,11 +47,18 @@ local succ, err = pcall(function()
     MusicVolume = .5;
     ToggleButton = Enum.KeyCode.KeypadMinus.Name
   }
+  local AdvancedPlayerSettings = {
+  }
 
   if not isfile(SettingsRHub.FolderName..SettingsRHub.SettingsFolderName) then
-    writefile(SettingsRHub.FolderName..SettingsRHub.SettingsFolderName, HttpService:JSONEncode(DefaultPlayerSettings))
+    writefile(SettingsRHub.FolderName..SettingsRHub.SettingsFolderName, HttpService:JSONEncode(AdvancedPlayerSettings))
   else
-    DefaultPlayerSettings = HttpService:JSONDecode(readfile(SettingsRHub.FolderName..SettingsRHub.SettingsFolderName))
+    AdvancedPlayerSettings = HttpService:JSONDecode(readfile(SettingsRHub.FolderName..SettingsRHub.SettingsFolderName))
+  end
+  if not isfile(SettingsRHub.FolderName..'\\GeneralSettings.lua') then
+    writefile(SettingsRHub.FolderName..'\\GeneralSettings.lua', HttpService:JSONDecode(DefaultPlayerSettings))
+  else
+    DefaultPlayerSettings = HttpService:JSONDecode(readfile(SettingsRHub.FolderName..'\\GeneralSettings.lua'))
   end
 
   if not isfolder(SettingsRHub.FolderName..'\\Icons') then makefolder(SettingsRHub.FolderName..'\\Icons') end
@@ -133,12 +141,6 @@ local succ, err = pcall(function()
       Time = time
     })
   end
-  local function detectGame()
-    if false then
-    else
-      notify('Game not found.')
-    end
-  end
 
   if not isfolder(SettingsRHub.FolderName..'\\Sounds') then makefolder(SettingsRHub.FolderName..'\\Sounds') end
   for key, value in pairs(SettingsRHub.Sounds) do
@@ -169,33 +171,13 @@ local succ, err = pcall(function()
 
   local Window = OrionLib:MakeWindow({Name = "RHub | General", HidePremium = false, SaveConfig = true, ConfigFolder = SettingsRHub.FolderName})
   -- LocalPlayer
-  local Main = Window:MakeTab({
+  local LocalPlayer = Window:MakeTab({
     Name = "LocalPlayer",
     Icon = SettingsRHub.Icons.LocalPlayer,
     PremiumOnly = false
   })
-  Main:AddLabel('General')
-  Main:AddButton({
-    Name = "Rejoin",
-    Callback = function()
-      alert('Rejoining...')
-      local ts = game:GetService("TeleportService")
-      local p = game:GetService("Players").LocalPlayer
-      ts:Teleport(game.PlaceId, p)
-    end  
-  })
-  Main:AddButton({
-    Name = "Friend A fucking nigger",
-    Callback = function()
-      game:GetService("StarterGui"):SetCore('SendNotification', {
-        Title = 'New Friend';
-        Text = 'A fucking Nigger';
-        Icon = 'rbxassetid://677844346'
-      })
-    end  
-  })
-  Main:AddParagraph('Camera Manager', [[The Camera object defines a view of the 3D game world.]])
-  local FovSlider = Main:AddSlider({
+  LocalPlayer:AddParagraph('Camera Manager', [[The Camera object defines a view of the 3D game world.]])
+  local FovSlider = LocalPlayer:AddSlider({
     Name = "Fov",
     Min = 1,
     Max = 120,
@@ -210,7 +192,7 @@ local succ, err = pcall(function()
   if not getgenv().oldfov then
     getgenv().oldfov = game:GetService("Workspace").CurrentCamera.FieldOfView
   end
-  Main:AddButton({
+  LocalPlayer:AddButton({
     Name = "Reset Fov",
     Callback = function()
       game:GetService("Workspace").CurrentCamera.FieldOfView = getgenv().oldfov
@@ -218,7 +200,7 @@ local succ, err = pcall(function()
       notcustom('Fov set to '..(math.floor(getgenv().oldfov*10)/10)..'.', 'Camera Manager', SettingsRHub.Icons.Video, 3)
     end  
   })
-  Main:AddToggle({
+  LocalPlayer:AddToggle({
     Name = "Shiftlock",
     Default = game:GetService("Players").LocalPlayer.DevEnableMouseLock,
     Color = Color3.fromRGB(166,0,0),
@@ -231,8 +213,8 @@ local succ, err = pcall(function()
       end
     end
   })
-  Main:AddParagraph('WalkSpeed Manager', [[WalkSpeed is a property that describes how quickly this Humanoid is able to walk, in studs per second.]])
-  Main:AddTextbox({
+  LocalPlayer:AddParagraph('WalkSpeed Manager', [[WalkSpeed is a property that describes how quickly this Humanoid is able to walk, in studs per second.]])
+  LocalPlayer:AddTextbox({
     Name = "WalkSpeed",
     Default = tostring(game:GetService("Players").LocalPlayer.Character:WaitForChild('Humanoid').WalkSpeed),
     TextDisappear = false,
@@ -248,15 +230,15 @@ local succ, err = pcall(function()
   if not getgenv().oldwalkspeed then
     getgenv().oldwalkspeed = game:GetService("Players").LocalPlayer.Character:WaitForChild('Humanoid').WalkSpeed
   end
-  Main:AddButton({
+  LocalPlayer:AddButton({
     Name = "Reset WalkSpeed",
     Callback = function()
       notcustom('Walkspeed set to '..string.gsub(getgenv().oldwalkspeed, ' ', '')..'.', 'WalkSpeed Manager', SettingsRHub.Icons.Settings)
       game:GetService("Players").LocalPlayer.Character:WaitForChild('Humanoid').WalkSpeed = getgenv().oldwalkspeed
     end    
   })
-  Main:AddParagraph('Character Manager', [[The Character property contains a reference to a Model containing a Humanoid, body parts, scripts and other objects required for simulating the player’s avatar in-game.]])
-  Main:AddButton({
+  LocalPlayer:AddParagraph('Character Manager', [[The Character property contains a reference to a Model containing a Humanoid, body parts, scripts and other objects required for simulating the player’s avatar in-game.]])
+  LocalPlayer:AddButton({
     Name = "Refresh",
     Callback = function()
       local oldcframe = game:GetService("Players").LocalPlayer.Character:WaitForChild('HumanoidRootPart').CFrame
@@ -400,9 +382,6 @@ local succ, err = pcall(function()
     Default = DefaultPlayerSettings.AutoDetectGame,
     Color = Color3.fromRGB(160, 0, 0);
     Callback = function(Value)
-      if Value == true then
-        detectGame()
-      end
       DefaultPlayerSettings.AutoDetectGame = Value
       writefile(SettingsRHub.FolderName..SettingsRHub.SettingsFolderName, HttpService:JSONEncode(DefaultPlayerSettings))
     end
