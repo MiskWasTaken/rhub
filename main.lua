@@ -194,9 +194,9 @@ local succ, err = pcall(function()
     Name = "Friend A fucking nigger",
     Callback = function()
       game:GetService("StarterGui"):SetCore('SendNotification', {
-        Title = 'New Friend!';
+        Title = 'New Friend';
         Text = 'A fucking Nigger';
-        Icon = '6319951718'
+        Icon = 'rbxassetid://677844346'
       })
     end  
   })
