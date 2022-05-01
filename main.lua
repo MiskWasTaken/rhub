@@ -133,6 +133,7 @@ local function detectGame()
     return
   end
   if game:GetService("HttpService"):JSONDecode(game:HttpGet('https://api.roblox.com/universes/get-universe-containing-place?placeid='..game.PlaceId))['UniverseId'] == 1720936166 then
+    notify('Game found: ASTD!')
     local newscriptexecuted
     Main:AddButton({
       Name = "TP to story mode",
