@@ -177,7 +177,7 @@ local function detectGame()
         if scriptexecuted == true then
           if Value == true then
             getgenv().AUTONEXTWAVECOROUTINE = coroutine.create(function()
-              while game:GetService("RunService").Stepped:Wait() do
+              while wait(.5) do
                 local args = {
                   [1] = "VoteWaveConfirm"
                 }
