@@ -154,6 +154,44 @@ local function detectGame()
         )
       end    
     })
+    Main:AddToggle({
+      Name = 'Auto Upgrade Every Unit';
+      Color = Color3.fromRGB(166,0,0);
+      Default = false;
+      Callback = function(Value)
+        if false then
+          if Value == true then
+            getgenv().AUTOUPGRADEUNITSCOROUTINE = coroutine.create(function()
+              
+            end)
+          end
+        else
+          error('WIP')
+        end
+      end
+    })
+    Main:AddToggle({
+      Name = 'Auto Next Wave';
+      Color = Color3.fromRGB(166,0,0);
+      Default = false;
+      Callback = function(Value)
+        if scriptexecuted == true then
+          if Value == true then
+            getgenv().AUTONEXTWAVECOROUTINE = coroutine.create(function()
+              while game:GetService("RunService").Stepped:Wait() do
+                local args = {
+                  [1] = "VoteWaveConfirm"
+                }
+                game:GetService("ReplicatedStorage").Remotes.Input:FireServer(unpack(args))
+              end
+            end)
+            coroutine.resume(getgenv().AUTONEXTWAVECOROUTINE)
+          else
+            coroutine.close(getgenv().AUTONEXTWAVECOROUTINE)
+          end
+        end
+      end
+    })
   else
     notify('Game not found.')
   end
