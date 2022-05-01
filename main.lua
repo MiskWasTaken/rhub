@@ -127,7 +127,13 @@ end
 local Window, Main
 
 local function detectGame()
+  if not getgenv().GAMEDETECTEDRHUB then
+    getgenv().GAMEDETECTEDRHUB = true
+  else
+    return
+  end
   if game:GetService("HttpService"):JSONDecode(game:HttpGet('https://api.roblox.com/universes/get-universe-containing-place?placeid='..game.PlaceId))['UniverseId'] == 1720936166 then
+    local newscriptexecuted
     Main:AddButton({
       Name = "TP to story mode",
       Callback = function()
@@ -164,7 +170,7 @@ local function detectGame()
       Color = Color3.fromRGB(166,0,0);
       Default = false;
       Callback = function(Value)
-        if scriptexecuted == true then
+        if newscriptexecuted == true then
           error('WIP')
         end
       end
@@ -191,6 +197,7 @@ local function detectGame()
         end
       end
     })
+    newscriptexecuted = true
   else
     notify('Game not found.')
   end
