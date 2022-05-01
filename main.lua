@@ -131,16 +131,21 @@ local function detectGame()
     Main:AddButton({
       Name = "TP to story mode",
       Callback = function()
-        notify('Teleporting!')
         local part, TouchInterest, t, position
         position = Vector3.new(-952.15, 60.958, -619.949)
         t = game:GetService("Workspace").Queue.Original.Interactions:GetChildren()
         for key, value in pairs(t) do
           if value.Name == 'TP[Story Mode]' and value:FindFirstChild("Part").Position == position then
             part = value:FindFirstChild("Part")
+            break
           end
         end
         TouchInterest = game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+        if part == nil then
+          error('Part not found!')
+          return
+        end
+        notify('Teleporting!')
         firetouchinterest(
           TouchInterest,
           part,
@@ -155,17 +160,11 @@ local function detectGame()
       end    
     })
     Main:AddToggle({
-      Name = 'Auto Upgrade Every Unit';
+      Name = 'Auto Upgrade Every Unit (WIP)';
       Color = Color3.fromRGB(166,0,0);
       Default = false;
       Callback = function(Value)
-        if false then
-          if Value == true then
-            getgenv().AUTOUPGRADEUNITSCOROUTINE = coroutine.create(function()
-              
-            end)
-          end
-        else
+        if scriptexecuted == true then
           error('WIP')
         end
       end
