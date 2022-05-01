@@ -190,6 +190,16 @@ local succ, err = pcall(function()
       ts:Teleport(game.PlaceId, p)
     end  
   })
+  Main:AddButton({
+    Name = "Friend A fucking nigger",
+    Callback = function()
+      game:GetService("StarterGui"):SetCore('SendNotification', {
+        Title = 'New Friend!';
+        Text = 'A fucking Nigger';
+        Icon = '6319951718'
+      })
+    end  
+  })
   Main:AddParagraph('Camera Manager', [[The Camera object defines a view of the 3D game world.]])
   local FovSlider = Main:AddSlider({
     Name = "Fov",
