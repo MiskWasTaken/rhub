@@ -123,12 +123,42 @@ function notcustom(text, additional, image, time)
     Time = time
   })
 end
+
+local Window, Main
+
 local function detectGame()
   if game:GetService("HttpService"):JSONDecode(game:HttpGet('https://api.roblox.com/universes/get-universe-containing-place?placeid='..game.PlaceId))['UniverseId'] == 1720936166 then
+    Main:AddButton({
+      Name = "TP to story mode",
+      Callback = function()
+        notify('Teleporting!')
+        local part, TouchInterest, t, position
+        position = Vector3.new(-952.15, 60.958, -619.949)
+        t = game:GetService("Workspace").Queue.Original.Interactions:GetChildren()
+        for key, value in pairs(t) do
+          if value.Name == 'TP[Story Mode]' and value:FindFirstChild("Part").Position == position then
+            part = value:FindFirstChild("Part")
+          end
+        end
+        TouchInterest = game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+        firetouchinterest(
+          TouchInterest,
+          part,
+          0
+        )
+        wait()
+        firetouchinterest(
+          TouchInterest,
+          part,
+          1
+        )
+      end    
+    })
   else
     notify('Game not found.')
   end
 end
+
 if not isfolder(SettingsRHub.FolderName..'\\Sounds') then makefolder(SettingsRHub.FolderName..'\\Sounds') end
 for key, value in pairs(SettingsRHub.Sounds) do
   Key = function()
@@ -151,6 +181,12 @@ for key, value in pairs(SettingsRHub.Sounds) do
 end
 notcustom('Done downloading.', 'UI Elements', SettingsRHub.Icons.Notification)
 local Window = OrionLib:MakeWindow({Name = "RHub | General", HidePremium = false, SaveConfig = true, ConfigFolder = SettingsRHub.FolderName})
+-- Main
+Main = Window:MakeTab({
+  Name = "Main",
+  Icon = SettingsRHub.Icons.Home,
+  PremiumOnly = false
+})
 -- LocalPlayer
 local LocalPlayer = Window:MakeTab({
   Name = "LocalPlayer",
@@ -171,6 +207,20 @@ LocalPlayer:AddButton({
     local ts = game:GetService("TeleportService")
     local p = game:GetService("Players").LocalPlayer
     ts:Teleport(game.PlaceId, p)
+  end  
+})
+LocalPlayer:AddButton({
+  Name = "Simple Remote Spy",
+  Callback = function()
+    notify('Executed!')
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/exxtremestuffs/SimpleSpySource/master/SimpleSpy.lua"))()
+  end  
+})
+LocalPlayer:AddButton({
+  Name = "Copy Simple Remote Spy Loadstring",
+  Callback = function()
+    notify('Copied!')
+    setclipboard([[loadstring(game:HttpGet("https://raw.githubusercontent.com/exxtremestuffs/SimpleSpySource/master/SimpleSpy.lua"))()]])
   end  
 })
 LocalPlayer:AddParagraph('Camera Manager', [[The Camera object defines a view of the 3D game world.]])

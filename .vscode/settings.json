@@ -16,6 +16,7 @@
         "delfile",
         "messagebox",
         "listfiles",
-        "delfolder"
+        "delfolder",
+        "firetouchinterest"
     ]
 }
