@@ -5,6 +5,7 @@
 -- Starting variables
 local scriptexecuted
 local HttpService = game:GetService('HttpService')
+local PathFindingService = game:GetService("PathfindingService")
 OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local SettingsRHub = {
   FolderName = 'RHubFolderv1';
@@ -124,47 +125,61 @@ function notcustom(text, additional, image, time)
   })
 end
 
-local Window, Main
+local Window, Main, GAMEDETECTEDRHUB, Action
 
 local function detectGame()
-  if not getgenv().GAMEDETECTEDRHUB then
-    getgenv().GAMEDETECTEDRHUB = true
+  if not GAMEDETECTEDRHUB then
+    GAMEDETECTEDRHUB = true
   else
     return
   end
   if game:GetService("HttpService"):JSONDecode(game:HttpGet('https://api.roblox.com/universes/get-universe-containing-place?placeid='..game.PlaceId))['UniverseId'] == 1720936166 then
     notify('Game found: ASTD!')
     local newscriptexecuted
+    local PathText = Main:AddParagraph('PathFindingService', '...')
     Main:AddButton({
       Name = "TP to story mode",
       Callback = function()
-        local part, TouchInterest, t, position
-        position = Vector3.new(-952.15, 60.958, -619.949)
-        t = game:GetService("Workspace").Queue.Original.Interactions:GetChildren()
-        for key, value in pairs(t) do
-          if value.Name == 'TP[Story Mode]' and value:FindFirstChild("Part").Position == position then
-            part = value:FindFirstChild("Part")
-            break
-          end
-        end
-        TouchInterest = game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart")
-        if part == nil then
-          error('Part not found!')
+        local Controller = require(game.Players.LocalPlayer:WaitForChild("PlayerScripts"):WaitForChild("PlayerModule")):GetControls()
+        local ToTouch = Vector3.new(-952.15, 60.958, -619.949)
+        local Humanoid = game:GetService("Players").LocalPlayer.Character:WaitForChild('Humanoid')
+        local HumanoidRootPart = game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart")
+        local path = PathFindingService:CreatePath()
+        path:ComputeAsync(HumanoidRootPart.Position, ToTouch)
+        local waypoints = path:GetWaypoints()
+        if #waypoints == 0 then
+          error("PathFindingService returned an error!")
           return
         end
-        notify('Teleporting!')
-        firetouchinterest(
-          TouchInterest,
-          part,
-          0
-        )
-        wait()
-        firetouchinterest(
-          TouchInterest,
-          part,
-          1
-        )
+        Controller:Disable()
+        local Speed = coroutine.create(function()
+          Humanoid.WalkSpeed = 35
+          while game:GetService("RunService").Stepped:Wait() do
+            Humanoid.WalkSpeed = 35
+          end
+        end)
+        coroutine.resume(Speed)
+        Action = coroutine.create(function()
+          for key, waypoint in ipairs(waypoints) do
+            Humanoid:MoveTo(waypoint.Position)
+            Humanoid.MoveToFinished:Wait()
+            PathText:Set(math.floor(100/#waypoints*key)..'%.')
+          end
+        end)
+        coroutine.close(Speed)
+        notify('Done!')
+        wait(1)
+        Speed = nil
+        Controller:Enable()
       end    
+    })
+    Main:AddButton({
+      Name = 'Give Character Controller';
+      Callback = function()
+        local Controller = require(game.Players.LocalPlayer:WaitForChild("PlayerScripts"):WaitForChild("PlayerModule")):GetControls()
+        notify('Done!')
+        Controller:Enable()
+      end
     })
     Main:AddToggle({
       Name = 'Auto Upgrade Every Unit (WIP)';
