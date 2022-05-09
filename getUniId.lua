@@ -1,2 +1,0 @@
--- game:GetService("HttpService"):JSONDecode(game:HttpGet('https://api.roblox.com/universes/get-universe-containing-place?placeid='..game.PlaceId))['UniverseId']
-setclipboard(game:GetService("HttpService"):JSONDecode(game:HttpGet('https://api.roblox.com/universes/get-universe-containing-place?placeid='..game.PlaceId))['UniverseId'])
